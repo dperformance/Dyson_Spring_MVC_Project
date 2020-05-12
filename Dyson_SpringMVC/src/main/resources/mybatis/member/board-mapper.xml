@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardMapper">
+
+	<!-- 게시글 총 수량 조회 -->
+	<select id="getBoardTotalCount" resultType="int">
+		SELECT COUNT(*) 
+		  FROM T_BOARD
+	</select>
+
+	<!-- 전체 게시글 조회 -->
+	<select id="getBoardListAll" resultType="boardVO">
+		SELECT * 
+		  FROM T_BOARD 
+		 ORDER BY B_SEQ DESC
+	</select>
+	
+	<!-- 페이지에 표시할 게시글 조회  -->	
+	<select id="getBoardList" resultType="boardVO" parameterType="com.dyson.swp.member.vo.Paging">
+		SELECT	*
+		  FROM	(
+		  			SELECT	ROWNUM AS R_NUM, A.*
+		  			FROM	(
+							SELECT	*
+				  			FROM	T_BOARD
+				 			ORDER BY B_SEQ DESC
+		  					) A
+<![CDATA[
+		  			WHERE	ROWNUM <= #{endRecord}
+		  		) B	
+		WHERE	B.R_NUM >= #{startRecord}
+]]>		
+	</select>
+	
+	<!-- 유저에게 받은 검색어로 페이징을 위한 게시글 갯수 조회 -->
+	<select id="getBoardSearchCount" parameterType="Map" resultType="int">
+		SELECT COUNT(*)
+		  FROM T_BOARD
+		  <if test='conSelect.equals("tc")'> <!-- 제목 + 내용 -->
+				WHERE B_TITLE LIKE '%'||#{searchData}||'%'
+				   OR B_CONTENT LIKE '%'||#{searchData}||'%'
+			</if>     
+			<if test='conSelect.equals("t")'> <!-- 제목만 -->
+				WHERE B_TITLE LIKE '%'||#{searchData}||'%'
+			</if>  		
+			<if test='conSelect.equals("w")'> <!-- 글작성자-->
+				WHERE B_WRITER LIKE '%' ||#{searchData}|| '%'
+			</if>
+	</select>
+	
+	<!-- 유저가 선택한 검색어로 게시글 조회 -->
+	<select id="getBoardSearchList" parameterType="Map" resultType="boardVO">
+		SELECT *
+		  FROM (SELECT ROWNUM AS R_NUM, A.*
+		  			FROM (SELECT *
+		  					FROM T_BOARD
+			<if test='conSelect.equals("tc")'> <!-- 제목 + 내용 -->
+				WHERE B_TITLE LIKE '%'||#{searchData}||'%'
+				   OR B_CONTENT LIKE '%'||#{searchData}||'%'
+			</if>     
+			<if test='conSelect.equals("t")'> <!-- 제목만 -->
+				WHERE B_TITLE LIKE '%'||#{searchData}||'%'
+			</if>  		
+			<if test='conSelect.equals("w")'> <!-- 글작성자-->
+				WHERE B_WRITER LIKE '%' ||#{searchData}|| '%'
+			</if>
+		  					ORDER BY B_SEQ DESC ) A
+<![CDATA[
+		  WHERE ROWNUM <= #{endRecord} ) B
+		  WHERE B.R_NUM >= #{startRecord}
+]]>
+	</select>
+
+
+	<!-- 조회수 체크 -->
+	<select id="getBoardHit" parameterType="Map" resultType="int">
+		SELECT	COUNT(*)
+		  FROM	T_BOARD_HIT
+		 WHERE	B_SEQ = #{b_seq}
+		   AND	MEM_EMAIL = #{mem_email}		
+	</select>	
+	
+	<!-- 조회수 update -->
+	<insert id="setBoardHit" parameterType="Map">
+		INSERT	INTO T_BOARD_HIT
+		   		(B_SEQ, MEM_EMAIL, HIT_DATE)
+		VALUES	(#{b_seq}, #{mem_email}, SYSDATE)
+	</insert>
+	
+	<!-- board 조회수 update -->
+	<update id="updateBoardHit" parameterType="int">
+		UPDATE	T_BOARD
+		   SET	B_HIT = B_HIT + 1
+		 WHERE	B_SEQ = #{b_seq}
+	</update>
+
+	<!-- 게시판 글 등록 -->
+	<insert id="insertBoard" parameterType="boardVO">
+		INSERT INTO T_BOARD
+				(B_SEQ, B_WRITER, B_TITLE, B_CONTENT, B_HIT, 
+				B_GROUP, B_STEP, B_LEV, B_BNAME, B_CRE_DATE, B_CRE_IP)
+		VALUES (T_BOARD_SEQ.NEXTVAL, #{b_writer}, #{b_title}, #{b_content}, 0,
+				0, 0, 0, 'mainBoard', SYSDATE, #{b_cre_ip} )		
+	</insert>
+	
+	<!-- 선택된 게시글 조회 -->
+	<select id="getBoardOne" parameterType="int" resultType="boardVO">
+		SELECT * 
+		  FROM T_BOARD 
+		 WHERE B_SEQ = #{b_seq}
+	</select>
+	
+	<!-- 선택된 게시글 삭제 처리 -->
+	<delete id="deleteBoard" parameterType="int">
+		DELETE 
+		  FROM T_BOARD 
+		 WHERE B_SEQ = #{b_seq}
+	</delete>
+	
+	<!-- 선택된 게시글 수정 처리 -->
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE T_BOARD
+		   SET B_TITLE = #{b_title},
+		       B_CONTENT = #{b_content}
+		 WHERE B_SEQ = #{b_seq} 
+	</update>
+	
+		
+	<!-- 선택된 게시글에 등록된 댓글 조회 -->
+	<select id="getCommList" parameterType="int" resultType="commVO">
+		SELECT * 
+		  FROM T_COMMENT 
+		 WHERE B_SEQ = #{b_seq}
+		 ORDER BY C_STEP, C_LEV
+	</select>
+	
+	<!-- 선택된 게시글 댓글의 step 조회 -->
+	<select id="getCommStep" parameterType="commVO" resultType="String">
+		SELECT COUNT(C_STEP)
+		  FROM T_COMMENT
+		 WHERE B_SEQ = #{b_seq} 
+	</select>
+	
+	<!-- 선택된 게시글에 댓글 추가 -->
+	<insert id="insertComm" parameterType="commVO">
+		INSERT INTO T_COMMENT
+				(C_SEQ, C_STEP, C_LEV, C_WRITER, C_CONTENT, C_BNAME, C_CRE_DATE, B_SEQ)
+		VALUES	(T_COMMENT_SEQ.NEXTVAL, #{c_step}, #{c_lev}, #{c_writer}, #{c_content}, #{c_bname},
+				SYSDATE, #{b_seq})
+	</insert>
+	
+	<!-- 댓글 삭제  -->
+	<delete id="deleteComm" parameterType="int">
+		DELETE 
+		  FROM T_COMMENT
+		 WHERE C_SEQ = #{c_seq}
+	</delete>
+	
+	<!-- 대댓글(답변) 삽입전  lev 업데이트 처리 -->
+	<update id="updateCommLev" parameterType="commVO">
+		UPDATE T_COMMENT
+		   SET C_LEV = C_LEV + 1
+		 WHERE B_SEQ = #{b_seq}
+		   AND C_STEP = #{c_step}
+		   AND C_LEV >= #{c_lev}
+	</update>
+	
+</mapper>

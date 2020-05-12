@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+	<typeAliases>
+		<typeAlias alias="memberVO" type="com.dyson.swp.member.vo.MemberVO"/>
+		<typeAlias alias="boardVO"  type="com.dyson.swp.member.vo.BoardVO"/>
+		<typeAlias alias="commVO"   type="com.dyson.swp.member.vo.CommVO" />
+	</typeAliases>
+
+  
+  <!-- SQL 작성파일인 매퍼 파일 위치 지정 
+	<mappers>
+    	<mapper resource="mybatis/member/register-mapper.xml"/>
+    	<mapper resource="mybatis/member/login-mapper.xml"/>
+    	<mapper resource="mybatis/member/board-mapper.xml"/>
+	</mappers> --> 
+	
+
+
+</configuration>

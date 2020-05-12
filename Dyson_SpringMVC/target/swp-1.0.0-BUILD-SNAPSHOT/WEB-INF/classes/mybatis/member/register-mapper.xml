@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RegisterMapper">
+
+	<!-- 회원가입 중 ajax를 이용한 이메일 중복 확인 -->
+	<select id="getMemberEmail" parameterType="memberVO" resultType="int">
+		SELECT COUNT(*) FROM T_MEMBER
+		 WHERE MEM_EMAIL = #{mem_email}
+	</select>
+	
+	<!-- 회원가입 중 ajax를 이용한 닉네임 중복 확인 -->
+	<select id="getMemberNick" parameterType="memberVO" resultType="int">
+		SELECT COUNT(*) FROM T_MEMBER
+		 WHERE MEM_NAME = #{mem_name}
+	</select>
+
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="memberVO">
+		INSERT INTO T_MEMBER
+			   (MEM_IDX, MEM_EMAIL, MEM_PW, MEM_NAME, MEM_IMAGES, MEM_CRE_IP, MEM_CRE_DT, ROLE)
+		VALUES (T_MEM_IDX.NEXTVAL, #{mem_email}, #{mem_pw}, #{mem_name}, #{mem_images}, 
+				#{mem_cre_ip}, SYSDATE, 'GUEST')
+	</insert>
+	
+</mapper>

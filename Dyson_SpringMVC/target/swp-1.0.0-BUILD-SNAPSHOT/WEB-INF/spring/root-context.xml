@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+		
+		
+	<!-- root-context.xml/Namespaces 설정에서 aop, beans, context,jdbc,mybatis-spring을 v체크한다. -->
+	
+	
+	
+<!-- ### [Mysql 사용시 사용] ### Spring JDBC모듈을 이용하여 dataSource 추가하기  
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://dyson-springboot2-webservice.cyghqc77an0t.ap-northeast-2.rds.amazonaws.com:3306/dyson_springboot2_webservice" />
+		<property name="username" value="dyson"/>
+		<property name="password" value="Sdy8890^^*"/>
+	</bean> 
+-->
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@oracle.ctplrvn9u8xp.ap-northeast-2.rds.amazonaws.com:1521:ORACLE" />
+		<property name="username" value="Dyson"/>
+		<property name="password" value="Qwer1234"/>
+		<!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />  
+		<property name="username" value="mystudy"/>
+		<property name="password" value="qwer1234"/>-->
+	</bean>
+	
+	<!--  mybatis와 스프링 연동작을 하기위한 SqlsessionFactory == DB연결 및 SQL의 실행을 위한 객체 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		
+		<!-- mybatis-config.xml이 스프링이 시작될때 같이 실행하도록 설정하기 -->
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		
+		<!-- mapper.xml이 인식될 수 있도록 설정 -->
+		<property name="mapperLocations" value="classpath:/mybatis/**/*-mapper.xml"></property> 
+		
+	</bean>
+	
+	
+	    <!-- SQLSessionTemplate설정하기 DAO인터페이스를 만들었기때문에 Mybatis에서 DAO인터페이스를 구현하기위해서 필요한작업 -->
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>   
+    </bean>
+
+
+</beans>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LoginMapper">
+
+	<!-- 로그인 (등록 된 회원 ID / PW) 확인 -->
+	<select id="getMember" parameterType="memberVO" resultType="memberVO">
+		SELECT * FROM T_MEMBER
+		 WHERE MEM_EMAIL = #{mem_email}
+		   AND MEM_PW = #{mem_pw}
+	</select>
+
+	<!-- 자동 로그인 or 비 로그인 session 처리-->
+	<update id="updateKeepLogin">
+		UPDATE T_MEMBER 
+		   SET MEM_SESSIONKEY = #{mem_sessionkey}
+		     , MEM_SESSIONLIMIT = #{mem_sessionlimit}
+		 WHERE MEM_EMAIL = #{mem_email}
+	</update>
+
+	<!-- session key 정보 조회  -->
+	<select id="getCheckLoginBefore" resultType="memberVO">
+		SELECT * FROM T_MEMBER
+		 WHERE MEM_SESSIONKEY = #{loginCookie}
+		   AND MEM_SESSIONLIMIT > SYSDATE
+	</select>
+</mapper>

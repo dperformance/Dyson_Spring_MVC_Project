@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+
+table{
+	height:300px;
+	width:1000px;
+	border-collapse: collapse;
+	margin:0 auto;
+}
+
+.subject{
+	margin-right:50px;
+}
+
+ h2{
+	padding-top: 80px;
+	text-align: center;
+}
+ h3{
+ 	color:lightgray;
+ }
+
+td, th{
+	border-bottom:1px solid lightgray;
+	text-align:center;
+	padding:5px;
+}
+
+thead > tr > td{
+	text-align:right;
+	padding: 10px;
+}
+
+
+.write {
+	text-align: right;
+	padding: 20px;
+}
+
+.subWrite {
+	padding: 20px;
+}
+
+
+th{
+	background-color:gray;
+	color:#fff;
+}
+
+tr{
+	
+text-align: center;
+}
+
+ table capstion{
+ caption-side: bottom;
+ }
+ 
+ 	/*글쓰기 버튼*/
+.writing{
+	margin:0 auto;
+	padding:1px 3px;
+	
+}
+ .paging {
+	list-style: none; 
+	padding:10px;
+	margin-left: 35%;
+}
+
+
+
+
+tfoot{
+	
+		background-color: #f4f4f4;
+}
+
+
+.paging li {
+		float: left;
+		margin-right: 8px;
+		
+	}
+	
+.paging li a {
+		text-decoration: none;
+		display: block;
+		padding: 3px 7px;
+		border: 1px solid #c0c0c0;
+		font-weight: bold;
+		color: black;
+		
+	}
+	/*검색을 입력하세요 */
+.search-text{
+	border-style:solid;
+	color:#c0c0c0;
+	padding:5px;
+	
+}
+	
+.search-btn{
+	  padding:4px 8px;
+	
+	  
+}
+
+
+
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+

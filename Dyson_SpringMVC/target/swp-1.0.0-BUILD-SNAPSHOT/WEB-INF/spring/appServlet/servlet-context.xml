@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.dyson.swp" />
+	
+	<!-- Interceptor는 컨트롤러의 밖이기 때문에 root-context가 아닌 servlet-context에 적용한다. -->
+	<beans:bean id="loginInterceptor" class="com.dyson.swp.interceptor.LoginInterceptor" />
+	<beans:bean id="authInterceptor" class="com.dyson.swp.interceptor.AuthInterceptor"/>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/userSignin"/>
+			<beans:ref bean="loginInterceptor" />
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/"/>
+			<beans:ref bean="authInterceptor" />
+		</interceptor> 
+	</interceptors>
+	
+	<!-- google oAuth2 -->
+	<beans:bean id="googleClientID" class="java.lang.String">
+		<beans:constructor-arg value="559336069642-4is2c1605ki037v3dd58t91t32m2bc9t.apps.googleusercontent.com" />
+	</beans:bean>
+	
+    <beans:bean id="googleClientSecret" class="java.lang.String">
+		<beans:constructor-arg value="7YS9CC8Y9AltWCTikZW0pRDX" />
+	</beans:bean>
+	
+	<beans:bean id="googleRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg value="http://ec2-15-165-191-75.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google" />	
+	</beans:bean>
+	
+	<beans:bean id="googleSns" class="com.dyson.swp.auth.SnsValue">
+		<beans:constructor-arg value="google" />
+		<beans:constructor-arg ref="googleClientID" />
+		<beans:constructor-arg ref="googleClientSecret" />
+		<beans:constructor-arg ref="googleRedirectUrl" />
+	</beans:bean>
+	
+	<beans:bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<beans:constructor-arg ref="googleClientID" />
+		<beans:constructor-arg ref="googleClientSecret" />
+	</beans:bean>
+	
+	<beans:bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<beans:property name="scope" value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile" />
+		<beans:property name="redirectUri" ref="googleRedirectUrl" />
+	</beans:bean>
+	
+	<!-- naver oAuth2 -->    
+	<beans:bean id="naverClientID" class="java.lang.String">
+		<beans:constructor-arg value="wDuDt4DI1Sk1zMAeBUO2" />
+	</beans:bean>
+	
+    <beans:bean id="naverClientSecret" class="java.lang.String">
+		<beans:constructor-arg value="hlRCMOeztc" />
+	</beans:bean>
+	
+	<beans:bean id="naverRedirectUrl" class="java.lang.String">
+		<!-- <beans:constructor-arg value="http://ec2-15-165-191-75.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/naver" />  -->
+		<beans:constructor-arg value="http://localhost:8080/login/oauth2/code/naver" />	
+	</beans:bean>
+	
+	<beans:bean id="naverSns" class="com.dyson.swp.auth.SnsValue">
+		<beans:constructor-arg value="naver" />
+		<beans:constructor-arg ref="naverClientID" />
+		<beans:constructor-arg ref="naverClientSecret" />
+		<beans:constructor-arg ref="naverRedirectUrl" />
+	</beans:bean>
+	
+	
+	
+</beans:beans>

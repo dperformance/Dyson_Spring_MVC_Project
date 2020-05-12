@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+	@media (max-width:700px){
+		#register_container{
+		margin:0px; padding:0px;
+		}
+	
+	}
+	#register_container {
+		position:static;
+		font-family: Maven Pro;
+		background-color: #fff;
+    	border: 2px solid #b6cbc7;
+    	color: #000;
+    	margin: auto;
+    	margin-top: 30px;
+		margin-bottom: 30px;
+    	padding:10px 10px;
+    	font-size:20px;
+    	height:800px;
+    	width:500px;
+    	text-align: center;
+
+  		overflow: hidden;
+	}
+	 #register_container h1{
+	  column-span: all;
+	  text-align: center;
+	  margin-bottom: 25px;
+	  
+	  
+	}
+
+	.register_box {
+		max-width: 100%;
+		background-color: #fff;
+    	border: 2px solid #c0c0c0;
+    	color: black;
+    	width:300px;
+    	padding-right: 28px;
+    	padding:5px 5px;
+    	margin:5px 5px;
+    	height:50px;
+    	border-radius: 5px;  
+	}
+	
+	.regiCheck {
+		font-size: 14px;
+	}
+	
+	.spanText {
+		text-align: left;
+	}
+	
+	#submit {
+		background-color: #4CAF50;
+		width:260px;
+ 		border: none;
+	  	color: white;
+	  	padding: 10px 30px;
+	  	text-align: center;
+	  	text-decoration: none;
+	  	display: inline-block;
+	  	font-size: 20px;
+	  	/*margin: 8px 2px; */
+	  	margin-top: 20px;
+	  	margin-left: 5px;
+	  	cursor: pointer;
+	  	border-radius: 8px;
+	}
+	
+	#oauthImg {
+		width: 150px;
+		border-radius: 20px;
+	}

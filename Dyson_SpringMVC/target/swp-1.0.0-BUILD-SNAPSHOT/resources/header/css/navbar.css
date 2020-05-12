@@ -1,0 +1,252 @@
+/** {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+} */
+
+nav {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	
+	font-family: Karla,Arial,sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	background: linear-gradient(to right, #6db33f 4px, #262a2d 4px 316px);
+	padding: 1px 20px;
+}
+
+.navUl {
+	list-style-type: none;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0px;
+	padding: 0px;
+}
+
+.navLogo {
+	width: 600px;
+	white-space: nowrap;
+}
+
+/*.navUl li {
+	font-size: 15px;
+	padding: 15px 5px;
+	white-space: nowrap;
+} */
+
+.itemlist {
+	margin-right:10px;
+}
+
+#userData {
+	color: white;
+	margin-right: 30px;
+	margin-left: 40px;
+	border: 3px #61656a solid;
+	border-radius: 20px;
+	padding: 10px;
+}
+
+#userImage { 
+	width: 35px;
+	border-radius: 20px;
+}
+
+.item button {
+	color: white;
+}
+
+.navLogo a:hover {
+	text-decoration: none;
+}
+
+/* 내가 추가한 부분 */
+.navLogo a img {
+	width: 50px;
+	position: absolute;
+    left: 0;
+    top: 5px;
+}
+
+/* 내가 추가 한 부분*/
+.description {
+	font-size: 15px;
+}
+
+.navLogo a, .toggle a {
+	font-size: 20px;
+	color: white;
+	
+	display: block;
+	position: relative;
+    padding: 4px 0;
+    padding-left: 65px;
+    text-decoration: none;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    font-weight: normal;
+    width: 205px;
+    outline: 1px dotted transparent;
+}
+
+
+
+.button.secondary {
+	border-bottom: 1px #444 solid;
+}
+
+
+
+
+/* item 호버 내가 추가한 부분  */
+.lineHover a {
+	color: #fff;
+	text-decoration: none;
+	position: relative;
+	padding: 6px 12px;
+	
+}
+
+.lineHover a::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 0;
+	height: 4px;
+	background: #6db33f;
+	transition: all .5s ease-out;
+}
+
+.lineHover a:hover::after {
+	width: 100%;
+}
+
+
+.toggle {
+	order: 1;
+}
+
+.item.button {
+	order: 2;
+}
+
+.item {
+	width: 100%;
+	text-align: center;
+	order: 3;
+	display: none;
+}
+
+.item.active {
+	display: block;
+}
+
+
+/* Navbar Toggle */
+.toggle {
+	cursor: pointer;
+}
+
+.bars {
+	background: #999;
+	display: inline-block;
+	height: 2px;
+	position: relative;
+	transition: background .2s ease-out;
+	width: 18px;
+}
+
+.bars:before, .bars:after {
+	background: #999;
+	content: '';
+	display: block;
+	height: 100%;
+	position: absolute;
+	transition: all .2s ease-out;
+	width: 100%;
+}
+
+.bars:before {
+	top: 5px;
+}
+
+.bars:after {
+	top: -5px;
+}
+
+/* Tablet menu */
+@media all and (min-width: 468px) {
+	.navUl {
+		justify-content: center;
+	}
+	.navLogo {
+		flex: 1;
+		padding: 10px 0px;
+	}
+	.logoName {
+		color: #6db33f;
+	}
+	.item.button {
+		width: auto;
+		order: 1;
+		display: block;
+	}
+	
+	.toggle {
+		order: 2;
+	}
+	.button.secondary {
+		border: 0;
+	}
+	.button a {
+		padding: 4px 15px;
+		background: #6db33f;
+		border: 1px #6db33f solid;
+		border-radius: 4px;
+	}
+	.button.secondary a {
+		background: transparent;
+	}
+	.button a:hover {
+		text-decoration: none;
+		transition: all .25s;
+	}
+	.button:not (.secondary ) a:hover {
+		background: #6db33f;
+		border-color: #005959;
+	}
+	.button.secondary a:hover {
+		color: #6db33f;
+	}
+}
+
+/* Desktop menu */
+@media all and (min-width: 768px) {
+	.item {
+		display: block;
+		width: auto;
+	}
+	.toggle {
+		display: none;
+	}
+	.navLogo {
+		order: 0;
+	}
+	.item {
+		order: 1;
+	}
+	.button {
+		order: 2;
+	}
+	/*.navUl li {
+		padding: 15px 10px;
+	} */
+	.navUl li.button {
+		padding-right: 0;
+	}
+}
