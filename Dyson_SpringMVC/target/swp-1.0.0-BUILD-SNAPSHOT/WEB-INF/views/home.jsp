@@ -4,34 +4,18 @@
 
 <!-- navbar(Header) -->
 <%@ include file="/WEB-INF/views/nav/navbar.jsp" %>
-<div class="main_container">
-<br/>
-<P>  The time on the server is ${serverTime}. </P>
-
-<!-- 
-	<div>
-		<label class="label">로그인</label>
-		<p>암호		: 단방향 암호화 알고리즘 SHA-2로 암호화 처리</p>
-		<p>소셜로그인	: OAuth2 Naver, Google 구현</p>
-		<p>자동로그인	: Cookie를 이용한 Session 정보 저장</p>
+<!-- main css 선언 -->
+<link href="/resources/main/css/main.css" rel="stylesheet" type="text/css"/>
+<div class="container">
+	<br>
+	<div class="jumbotron">
+		<h1 class="text-center">저의 홈페이지에 접속해 주셔서 감사합니다.</h1> <br>
+		<p class="text-center">로그인, 회원가입, 게시판, 댓글 기능을 구현한 개인 포트폴리오 입니다.</p> <br>
+		<p class="text-center">
+			<a class="btn btn-success btn-lg" href="/board" role="button">게시판으로 이동하기</a>
+		</p>
 	</div>
-	
-	<div>
-		<label class="label">회원가입</label>
-		<p>Ajax를 이용하여 Nickname & Email Check</p>
-		<p>회원가입시 email 인증</p>
-		<p></p>
-	</div>
-	
-	<div>
-		<label class="label">게시판</label>
-		<p>로그인 유저에게만 글쓰기,댓글 권한 부여</p>
-		<p>게시글 수 변경</p>
-		<p>게시글 (제목+내용 / 제목만 / 글작성자 ) 검색기능 </p>
-		<p></p>
-	</div>
- -->
- 	
+	<P style="text-align:center;">${serverTime}.</P>
 </div>
 </body>
 </html>

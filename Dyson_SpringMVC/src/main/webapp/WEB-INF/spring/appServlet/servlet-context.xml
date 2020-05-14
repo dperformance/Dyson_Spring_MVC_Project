@@ -79,8 +79,8 @@
 	</beans:bean>
 	
 	<beans:bean id="naverRedirectUrl" class="java.lang.String">
-		<!-- <beans:constructor-arg value="http://ec2-15-165-191-75.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/naver" />  -->
-		<beans:constructor-arg value="http://localhost:8080/login/oauth2/code/naver" />	
+		<beans:constructor-arg value="http://ec2-15-165-191-75.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/naver" />
+		<!--<beans:constructor-arg value="http://localhost:8080/login/oauth2/code/naver" /> -->	
 	</beans:bean>
 	
 	<beans:bean id="naverSns" class="com.dyson.swp.auth.SnsValue">
@@ -89,7 +89,4 @@
 		<beans:constructor-arg ref="naverClientSecret" />
 		<beans:constructor-arg ref="naverRedirectUrl" />
 	</beans:bean>
-	
-	
-	
 </beans:beans>

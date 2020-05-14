@@ -8,15 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dyson SpringMVC</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
 	<!-- navbar css, js 경로 선언-->
 	<link href="/resources/header/css/navbar.css" rel="stylesheet" type="text/css"/>
 	<script src="/resources/header/js/navbar.js"></script>
-	
-	<!-- main css 선언 -->
-	<link href="/resources/main/css/main.css" rel="stylesheet" type="text/css"/>
-	
+		
 	<!-- login css, js 경로 선언 -->
 	<link href="/resources/login/css/login.css" rel="stylesheet" type="text/css" />
 	<script src="/resources/login/js/login.js"></script>
