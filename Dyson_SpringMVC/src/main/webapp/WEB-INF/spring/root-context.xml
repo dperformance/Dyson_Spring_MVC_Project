@@ -15,12 +15,7 @@
 				
 	<!-- root-context.xml/Namespaces 설정에서 aop, beans, context,jdbc,mybatis-spring을 v체크한다. -->
 	
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@oracle.ctplrvn9u8xp.ap-northeast-2.rds.amazonaws.com:1521:ORACLE" />
-		<property name="username" value="Dyson"/>
-		<property name="password" value="Qwer1234"/>
-	</bean>
+
 	
 	<!--  mybatis와 스프링 연동작을 하기위한 SqlsessionFactory == DB연결 및 SQL의 실행을 위한 객체 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
